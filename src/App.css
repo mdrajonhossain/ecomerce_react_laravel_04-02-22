@@ -1,38 +1,102 @@
-.App {
-  text-align: center;
+body{
+	background: #e7dcbf45;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.page_name{
+	font-size: 38px;
+	color: gray;
+	font-weight: bold;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.r{
+	color: #d19c97;
+	font-weight: bold;
+	padding: 0px 10px 0px 10px;
+	font-size: 45px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+
+.catagory_title{
+	width: 100%;
+	padding: 10px;
+	font-size: 20px;
+	text-transform: uppercase;
+	cursor: pointer;	
+	color: white;
+	background-color: #d19c97;
+	border-radius: 10px 10px 0px 0px;
+	border-bottom: 1px solid white;
 }
 
-.App-link {
-  color: #61dafb;
+.catagory_list{
+	background-color: white;
+	
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.catagory_list a{
+	color: black;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.catagory_list .list{
+	padding: 10px;
+	line-height: 35px;
+	cursor: pointer;
+	background: white;
+	border-bottom: 1px solid gray;
+	text-align: left;
+	padding-left: 20px;
+}
+
+
+
+
+
+.catagory_list .list:hover a{
+	color: #d19c97;
+	font-weight: bold;
+}
+
+.discount{
+	text-decoration: line-through;
+}
+
+
+.fooderinput{
+	height: 50px;
+	width: 100%;
+	margin-bottom: 20px;
+	padding-left: 20px;
+	border: none;
+}
+
+.fooderinput_btn{
+	height: 50px;
+	width: 100%;
+	margin-bottom: 20px;
+	padding-left: 20px;
+	background-color: #d19c97;
+	border: none;
+}
+
+
+.add_count{
+	text-align: center;
+	background: #ff000085;
+	border-radius: 20px;
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	color: white;
+	font-size: 13px;
+	top: 10px;
+}
+
+.list:hover{
+	background-color: #d19c97;
+	color: white;
+	border-bottom: 2px solid hsl(240, 26%, 72%);
+	border-radius: 0px 0px 10px 10px;
+	border-top: none;
 }
