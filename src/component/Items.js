@@ -14,6 +14,7 @@ function Items({ match }) {
   const [lgShow, setLgShow] = useState(false);
   const [single_item, setSingle_item] = useState([]);
 
+  const [addcart_localstorage, setAddcart_localstorage] = useState([]);
 
 
   useEffect(() => {
@@ -25,7 +26,12 @@ function Items({ match }) {
   }, []);
 
 
-  console.log(itemlist.length);
+  useEffect(() => {
+    setInterval(function () {
+      var cart = JSON.parse(localStorage.getItem("item") || "[]");
+      setAddcart_localstorage(cart);
+    }, 100);
+  }, []);
 
   const viewdetail = (e) => {
     setLgShow(true);
@@ -33,7 +39,7 @@ function Items({ match }) {
   }
 
   const addcardt = (e) => {
-    
+
     var id = e.id;
     var item_name = e.name;
     var api_photo = e.api_photo;
@@ -64,16 +70,41 @@ function Items({ match }) {
   }
 
 
+  const increment = (e) => {
+    var item = JSON.parse(localStorage.getItem("item") || "[]");
+    var index = item.findIndex(x => x.id === e);
+    if (item[index].qnt != 10) {
+      item[index].qnt = item[index].qnt + 1;
+      localStorage.setItem("item", JSON.stringify(item));
+    }
+  }
+
+
+  const derement = (e) => {
+    var item = JSON.parse(localStorage.getItem("item") || "[]");
+    var index = item.findIndex(x => x.id === e);
+    if (item[index].qnt > 1) {
+      item[index].qnt = item[index].qnt - 1;
+      localStorage.setItem("item", JSON.stringify(item));
+    } else {
+      const item = JSON.parse(localStorage.getItem("item"));
+      var index = item.findIndex(x => x.id === e);
+      item.splice(index, 1);
+      localStorage.setItem('item', JSON.stringify(item));
+    }
+  }
+
+
   return (
     <>
       <Header />
 
-      
-      <div className='container h5 p-3 text-center'>{itemlist.length == 0 ? 'Wait Please No Product' : 
-      <div className='container h4 p-3 text-center' style={{ color: '#d19c97' }}>-Product View-</div>
+
+      <div className='container h5 p-3 text-center'>{itemlist.length == 0 ? 'Wait Please No Product' :
+        <div className='container h4 p-3 text-center' style={{ color: '#d19c97' }}>-Product View-</div>
       }</div>
 
-      
+
       <Modal size="lg" show={lgShow} onHide={() => setLgShow(false)} aria-labelledby="example-modal-sizes-title-lg">
         <Modal.Header closeButton>
           <Modal.Title id="example-modal-sizes-title-lg">Item Details</Modal.Title>
@@ -99,7 +130,7 @@ function Items({ match }) {
                 <div className=''><b>Delivery</b></div>
                 <div className=''>Dhaka, Dhaka North, Banani Road No. 12 - 19</div>
                 <div className='pt-4'><b>Home Delivery</b></div>
-                <div className=''>Cash on Delivery Available</div>
+                <div className=''>rajon Cash on Delivery Available</div>
               </div>
 
             </div>
@@ -115,9 +146,24 @@ function Items({ match }) {
           {itemlist.map((data, i) => {
             return (
               <>
-
-                <div className='col-md-3 p-2'>
+                <div className='col-md-3 p-2 item_tab'>
                   <Card>
+
+                    {addcart_localstorage.map((cart) => {
+                      return (
+                        <>
+                          {cart.id == data.id ?
+                            <div className='display_top_qnt'>
+                              <span className='text-light itemtopqnt' onClick={() => derement(cart.id)} style={{ cursor: 'pointer' }}>-</span>
+                              <span className='text-light h1 p-4 text-center'>{cart.qnt}</span>
+                              <span className='text-light itemtopqnt' onClick={() => increment(cart.id)} style={{ cursor: 'pointer' }}>+</span>
+                              <br /><span>৳{cart.price * cart.qnt}</span>
+                            </div>
+                            : ''}
+                        </>
+                      )
+                    })}
+
                     <Card.Img variant="top" width="100%" height="250" src={data.api_photo} />
                     <Card.Body className="" style={{ background: '#c4cbc0' }}>
                       <Card.Title style={{ fontSize: '14px' }}> {data.name}</Card.Title>
@@ -129,17 +175,13 @@ function Items({ match }) {
                     </Card.Body>
                   </Card>
                 </div>
-
               </>
             )
           })}
         </Container>
       </div>
-      <br />
-
-      <br />
+      <br /><br />
       <Fooder />
-
     </>
   );
 }

@@ -157,6 +157,7 @@ function Allproduct() {
                                 <span className='text-light itemtopqnt' onClick={() => derement(cart.id)} style={{ cursor: 'pointer' }}>-</span>
                                 <span className='text-light h1 p-4 text-center'>{cart.qnt}</span>
                                 <span className='text-light itemtopqnt' onClick={() => increment(cart.id)} style={{ cursor: 'pointer' }}>+</span>
+                                <br /><span>৳{cart.price * cart.qnt}</span>
                               </div>
                               : ''}
                           </>
