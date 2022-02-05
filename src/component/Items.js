@@ -25,6 +25,8 @@ function Items({ match }) {
   }, []);
 
 
+  console.log(itemlist.length);
+
   const viewdetail = (e) => {
     setLgShow(true);
     setSingle_item(e);
@@ -66,8 +68,12 @@ function Items({ match }) {
     <>
       <Header />
 
+      
+      <div className='container h5 p-3 text-center'>{itemlist.length == 0 ? 'Wait Please No Product' : 
       <div className='container h4 p-3 text-center' style={{ color: '#d19c97' }}>-Product View-</div>
+      }</div>
 
+      
       <Modal size="lg" show={lgShow} onHide={() => setLgShow(false)} aria-labelledby="example-modal-sizes-title-lg">
         <Modal.Header closeButton>
           <Modal.Title id="example-modal-sizes-title-lg">Item Details</Modal.Title>

@@ -36,7 +36,7 @@ function Home() {
       });
   }, []);
 
-  
+
 
   return (
     <>
@@ -92,24 +92,28 @@ function Home() {
 
 
 
-        <div className='container h4 p-3 text-center' style={{color:'#d19c97'}}>-Catagory View-</div>
+        <div className='container h4 p-3 text-center' style={{ color: '#d19c97' }}>-Catagory View-</div>
 
         <div className='row'>
           {catagoryname.map((data) => {
             return (
               <>
-                <div className='col-md-3'>
-                  <Card>
-                    <Card.Body>
-                      <Card.Title>Product 15</Card.Title>
-                    </Card.Body>
-                    <Card.Img variant="center" width="100%" height="220" src={data.api_photo} />
-                    <Card.Body>
-                      <Card.Title>{data.name}</Card.Title>
-                    </Card.Body>
-                  </Card>
+
+                <div className='col-md-3' style={{ cursor: 'pointer' }}>
+                  <Link to={`/items/${data.slug}`} style={{ textDecoration: 'none', color: 'black' }}>
+                    <Card>
+                      <Card.Body>
+                        <Card.Title>Product 15-</Card.Title>
+                      </Card.Body>
+                      <Card.Img variant="center" width="100%" height="220" src={data.api_photo} />
+                      <Card.Body>
+                        <Card.Title>{data.name}</Card.Title>
+                      </Card.Body>
+                    </Card>
+                  </Link>
                   <br />
                 </div>
+
               </>
             )
           })}
@@ -144,7 +148,7 @@ function Home() {
         </Row>
       </Container>
       <br />
-      <div className='container h4 p-3 text-center' style={{color:'#d19c97'}}>All Product View</div>
+      <div className='container h4 p-3 text-center' style={{ color: '#d19c97' }}>All Product View</div>
       <Allproduct />
       <Fooder />
     </>
