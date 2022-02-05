@@ -1,8 +1,8 @@
 import '../App.css';
-import { Navbar, Container, Nav, Card, Button, Col, Row, ButtonGroup, Modal } from 'react-bootstrap';
+import { Container, Card, Button, ButtonGroup, Modal } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faShippingFast, faExchangeAlt, faPhoneAlt, faEye, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
 
 

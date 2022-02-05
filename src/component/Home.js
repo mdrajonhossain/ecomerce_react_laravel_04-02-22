@@ -18,13 +18,23 @@ import { Link } from "react-router-dom";
 
 function Home() {
   const [catagoryname, setCatagoryname] = useState([]);
+  const [brandname, setBrandname] = useState([]);
   const [catsitebar, setCatsitebar] = useState(true);
+
 
 
   useEffect(() => {
     axios.get('http://127.0.0.1:8000/api/cataroutapi')
       .then(res => {
         setCatagoryname(res.data);
+      });
+  }, []);
+
+
+  useEffect(() => {
+    axios.get('http://127.0.0.1:8000/api/apibrand')
+      .then(res => {
+        setBrandname(res.data);
       });
   }, []);
 
@@ -57,17 +67,16 @@ function Home() {
             }
           </div>
 
-
           <div className="col-md-9">
-            <Navbar collapseOnSelect expand="lg">
+            <Navbar collapseOnSelect>
               <Container>
                 <Navbar.Collapse id="responsive-navbar-nav">
                   <Nav className="me-auto text-auto" style={{ fontSize: '18px', fontWeight: 'bold' }}>
-                    <Nav.Link href="#features">Home</Nav.Link>
-                    <Nav.Link href="#features">Shop</Nav.Link>
-                    <Nav.Link href="#features">Shop Detail</Nav.Link>
-                    <Nav.Link href="#features">Pages</Nav.Link>
-                    <Nav.Link href="#features">Contact</Nav.Link>
+                    <Nav.Link className='menu'>Catagory</Nav.Link>
+                    <Nav.Link className='menu'>Product</Nav.Link>
+                    <Nav.Link className='menu'>Brand</Nav.Link>
+                    <Nav.Link className='menu'>About</Nav.Link>
+                    <Nav.Link className='menu'>Contact</Nav.Link>
                   </Nav>
                 </Navbar.Collapse>
               </Container>
@@ -110,6 +119,59 @@ function Home() {
                   <br />
                 </div>
 
+              </>
+            )
+          })}
+        </div>
+      </div>
+
+
+      <br /> <br />
+      <Container className='text-light p-4'>
+        <Row>
+          <Col>
+            <Row className='bg-secondary p-4'>
+              <Col md={2}>
+              </Col>
+              <Col md={8}>
+                <div>20% OFF THE ALL ORDER</div>
+                <h1>Spring Collection</h1>
+              </Col>
+            </Row>
+          </Col>
+
+          <Col>
+            <Row className='bg-success p-4'>
+              <Col md={2}>
+              </Col>
+              <Col md={8}>
+                <div style={{ textAlign: 'right' }}>20% OFF THE ALL ORDER</div>
+                <h1 className='text-warning' style={{ textAlign: 'right' }}>Spring Collection</h1>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </Container>
+      <br />
+
+
+      <div className='container h4 p-3 text-center' style={{ color: '#d19c97' }}>-Brand View--</div>
+      <div className='container'>
+        <div className='row'>
+          {brandname.map((brand) => {
+            return (
+              <>
+                <div className='col-md-3' style={{ cursor: 'pointer' }}>
+                  <Card>
+                    <Card.Body>                      
+                    </Card.Body>
+                    <Card.Img variant="center" width="100%" height="220" src={brand.api_photo} />
+                    <Card.Body>
+                      <Card.Title>{brand.name}</Card.Title>
+                    </Card.Body>
+                  </Card>
+                  <br />
+                </div>
               </>
             )
           })}

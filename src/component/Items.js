@@ -1,8 +1,8 @@
 import '../App.css';
-import { Navbar, Container, Nav, Card, Button, Col, Row, ButtonGroup, Modal } from 'react-bootstrap';
+import { Container, Card, Button, ButtonGroup, Modal, Navbar, Nav } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faShippingFast, faExchangeAlt, faPhoneAlt, faEye, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
 import Header from './Header';
 import Fooder from './Fooder';
@@ -98,6 +98,22 @@ function Items({ match }) {
   return (
     <>
       <Header />
+
+      <center>
+        <Navbar collapseOnSelect>
+          <Container>
+            <Navbar.Collapse id="responsive-navbar-nav">
+              <Nav className="me-auto text-auto" style={{ fontSize: '18px', fontWeight: 'bold' }}>
+                <Nav.Link className='menu'>Catagory</Nav.Link>
+                <Nav.Link className='menu'>Product</Nav.Link>
+                <Nav.Link className='menu'>Brand</Nav.Link>
+                <Nav.Link className='menu'>About</Nav.Link>
+                <Nav.Link className='menu'>Contact</Nav.Link>
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
+      </center>
 
 
       <div className='container h5 p-3 text-center'>{itemlist.length == 0 ? 'Wait Please No Product' :

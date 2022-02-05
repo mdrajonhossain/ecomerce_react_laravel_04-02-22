@@ -39,9 +39,6 @@ body{
 	font-weight: bold;
 }
 
-
-
-
 .catagory_list .list{
 	padding: 10px;
 	line-height: 35px;
@@ -51,9 +48,6 @@ body{
 	text-align: left;
 	padding-left: 20px;
 }
-
-
-
 
 
 .catagory_list .list:hover a{
@@ -118,4 +112,17 @@ body{
 	font-size: 45px;
 	border-radius: 10px;	
 	height: 20px;
+}
+
+.menu{
+	width: 40%;
+	background-color: #d19c97;
+	margin-left: 10px;
+	border-radius: 10px;
+	color: rgb(247 246 246) !important;
+}
+
+.menu:hover{
+	color: rgb(247 246 246) !important;
+	background-color: #473332;
 }
