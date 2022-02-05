@@ -92,7 +92,7 @@ function Home() {
 
 
 
-        <div className='container h4 p-3 text-center' style={{ color: '#d19c97' }}>-Catagory View-</div>
+        <div className='container h4 p-3 text-center' style={{ color: '#d19c97' }}>-Catagory View-rajon</div>
 
         <div className='row'>
           {catagoryname.map((data) => {
