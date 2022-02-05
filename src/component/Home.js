@@ -1,6 +1,6 @@
 import '../App.css';
 import {
-  Navbar, Container, Nav, Card, Button, Col, Row, ButtonGroup
+  Navbar, Container, Nav, Card, Col, Row
 } from 'react-bootstrap';
 import Header from './Header';
 import Fooder from './Fooder';
@@ -8,7 +8,7 @@ import Allproduct from './Allproduct';
 import Carouseldiv from './Carousel';
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faShippingFast, faExchangeAlt, faPhoneAlt, faEye, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faShippingFast, faExchangeAlt, faPhoneAlt, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -18,21 +18,13 @@ import { Link } from "react-router-dom";
 
 function Home() {
   const [catagoryname, setCatagoryname] = useState([]);
-  const [item, setItem] = useState([]);
+  const [catsitebar, setCatsitebar] = useState(true);
 
 
   useEffect(() => {
     axios.get('http://127.0.0.1:8000/api/cataroutapi')
       .then(res => {
         setCatagoryname(res.data);
-      });
-  }, []);
-
-
-  useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/getitems')
-      .then(res => {
-        setItem(res.data);
       });
   }, []);
 
@@ -44,21 +36,25 @@ function Home() {
       <div className="container">
         <div className="row">
           <div className="col-md-3 text-center">
-            <div className='catagory_title'>Catagories</div>
-            <div className='catagory_list'>
-              {catagoryname.map((data) => {
-                return (
-                  <>
-                    <Link to={`/items/${data.slug}`}>
-                      <div className='list'>
-                        <span>
-                          <img style={{ width: '20px', height: '20px' }} src={data.api_photo} alt="cata" />
-                        </span> &nbsp;{data.name}</div>
-                    </Link>
-                  </>
-                )
-              })}
-            </div>
+            <div className='catagory_title' onClick={() => setCatsitebar(false)}>Catagories</div>
+            {catsitebar ?
+              <div className='catagory_list'>
+                {catagoryname.map((data) => {
+                  return (
+                    <>
+                      <Link to={`/items/${data.slug}`}>
+                        <div className='list'>
+                          <span>
+                            <img style={{ width: '20px', height: '20px' }} src={data.api_photo} alt="cata" />
+                          </span> &nbsp;{data.name}</div>
+                      </Link>
+                    </>
+                  )
+                })}
+              </div>
+              :
+              <div className='h6 text-light' style={{ background: '#d19c97', cursor: 'pointer' }} onClick={() => setCatsitebar(true)}><FontAwesomeIcon icon={faCaretDown} /></div>
+            }
           </div>
 
 
@@ -92,7 +88,7 @@ function Home() {
 
 
 
-        <div className='container h4 p-3 text-center' style={{ color: '#d19c97' }}>-Catagory View-rajon</div>
+        <div className='container h4 p-3 text-center' style={{ color: '#d19c97' }}>-Catagory View-</div>
 
         <div className='row'>
           {catagoryname.map((data) => {

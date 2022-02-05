@@ -13,6 +13,8 @@ function Allproduct() {
   const [lgShow, setLgShow] = useState(false);
   const [single_item, setSingle_item] = useState([]);
 
+  const [addcart_localstorage, setAddcart_localstorage] = useState([]);
+
 
 
   useEffect(() => {
@@ -23,6 +25,16 @@ function Allproduct() {
   }, []);
 
 
+  useEffect(() => {
+    setInterval(function () {
+      var cart = JSON.parse(localStorage.getItem("item") || "[]");
+      setAddcart_localstorage(cart);
+    }, 100);
+  }, []);
+
+
+
+
 
   const viewdetail = (e) => {
     setLgShow(true);
@@ -30,7 +42,7 @@ function Allproduct() {
   }
 
   const addcardt = (e) => {
-    
+
     var id = e.id;
     var item_name = e.name;
     var api_photo = e.api_photo;
@@ -54,13 +66,39 @@ function Allproduct() {
       } else {
         var item = JSON.parse(localStorage.getItem("item") || "[]");
         var index = item.findIndex(x => x.item_name === item_name);
-        item[index].qnt = item[index].qnt + 1;
-        localStorage.setItem("item", JSON.stringify(item));
+        if (item[index].qnt != 10) {
+          item[index].qnt = item[index].qnt + 1;
+          localStorage.setItem("item", JSON.stringify(item));
+        }
       }
     }
   }
 
 
+
+  const increment = (e) => {
+    var item = JSON.parse(localStorage.getItem("item") || "[]");
+    var index = item.findIndex(x => x.id === e);
+    if (item[index].qnt != 10) {
+      item[index].qnt = item[index].qnt + 1;
+      localStorage.setItem("item", JSON.stringify(item));
+    }
+  }
+
+
+  const derement = (e) => {
+    var item = JSON.parse(localStorage.getItem("item") || "[]");
+    var index = item.findIndex(x => x.id === e);
+    if (item[index].qnt > 1) {
+      item[index].qnt = item[index].qnt - 1;
+      localStorage.setItem("item", JSON.stringify(item));
+    } else {
+      const item = JSON.parse(localStorage.getItem("item"));
+      var index = item.findIndex(x => x.id === e);
+      item.splice(index, 1);
+      localStorage.setItem('item', JSON.stringify(item));
+    }
+  }
 
 
   return (
@@ -83,7 +121,7 @@ function Allproduct() {
                 <div className='h4'>{single_item.name}</div>
                 <div className='h5 text-danger'>Price ৳{single_item.discount_price} <span className='discount'>৳{single_item.previoust_price}</span></div>
                 <Button style={{ fontSize: '16px' }} variant="danger text-light"> Buy Now </Button> &nbsp;  &nbsp;
-                <Button style={{ fontSize: '16px' }} variant="info text-light" onClick={()=>addcardt(single_item)}> Add To Cart</Button>
+                <Button style={{ fontSize: '16px' }} variant="info text-light" onClick={() => addcardt(single_item)}> Add To Cart</Button>
                 <div className='pt-4'>Color Family color</div>
                 <div className=''>Quantity</div>
               </div>
@@ -108,15 +146,30 @@ function Allproduct() {
             return (
               <>
                 {i + 1 < productcount ?
-                  <div className='col-md-3 p-2'>
+                  <div className='col-md-3 p-2 item_tab'>
                     <Card>
+
+                      {addcart_localstorage.map((cart) => {
+                        return (
+                          <>
+                            {cart.id == data.id ?
+                              <div className='display_top_qnt'>
+                                <span className='text-light itemtopqnt' onClick={() => derement(cart.id)} style={{ cursor: 'pointer' }}>-</span>
+                                <span className='text-light h1 p-4 text-center'>{cart.qnt}</span>
+                                <span className='text-light itemtopqnt' onClick={() => increment(cart.id)} style={{ cursor: 'pointer' }}>+</span>
+                              </div>
+                              : ''}
+                          </>
+                        )
+                      })}
+
                       <Card.Img variant="top" width="100%" height="250" src={data.api_photo} />
                       <Card.Body className="" style={{ background: '#c4cbc0' }}>
                         <Card.Title style={{ fontSize: '14px' }}> {data.name}</Card.Title>
                         <div className='' style={{ color: 'rgb(245, 114, 36)' }} ><span>৳{data.discount_price}</span> &nbsp; <span className='discount'>৳{data.previoust_price}</span></div>
                         <ButtonGroup>
                           <Button style={{ fontSize: '12px' }} variant="danger text-light" onClick={() => viewdetail(data)}> <FontAwesomeIcon icon={faEye} /> View Details</Button>
-                          <Button style={{ fontSize: '12px' }} variant="info text-light" onClick={()=>addcardt(data)}><FontAwesomeIcon icon={faShoppingCart} /> Add To Cart</Button>
+                          <Button style={{ fontSize: '12px' }} variant="info text-light" onClick={() => addcardt(data)}><FontAwesomeIcon icon={faShoppingCart} /> Add To Cart</Button>
                         </ButtonGroup>
                       </Card.Body>
                     </Card>
