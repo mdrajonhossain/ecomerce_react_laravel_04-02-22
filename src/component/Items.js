@@ -129,8 +129,8 @@ function Items({ match }) {
               <div className='col-md-4'>
                 <div className=''><b>Delivery</b></div>
                 <div className=''>Dhaka, Dhaka North, Banani Road No. 12 - 19</div>
-                <div className='pt-4'><b>Home Delivery</b></div>
-                <div className=''>rajon Cash on Delivery Available</div>
+                <div className='pt-4'><b>Home Delivery (symble)</b></div>
+                <div className=''>Cash on Delivery Available</div>
               </div>
 
             </div>
