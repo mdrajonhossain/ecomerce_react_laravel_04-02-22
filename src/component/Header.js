@@ -106,7 +106,7 @@ function Header() {
       {/* registration */}
       <Modal size="lg" show={registration} onHide={() => setRegistration(false)} aria-labelledby="example-modal-sizes-title-lg">
         <Modal.Header closeButton className='text-light bg-info'>
-          <Modal.Title id="example-modal-sizes-title-lg" className="">6Rregistration</Modal.Title>
+          <Modal.Title id="example-modal-sizes-title-lg" className="">Rregistration</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
