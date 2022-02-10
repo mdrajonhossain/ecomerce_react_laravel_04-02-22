@@ -146,14 +146,14 @@ function Allproduct() {
             return (
               <>
                 {i + 1 < productcount ?
-                  <div className='col-md-3 p-2 item_tab'>
+                  <div className='col-md-3 p-2 item_tab' key="{data}">
                     <Card>
 
                       {addcart_localstorage.map((cart) => {
                         return (
                           <>
                             {cart.id == data.id ?
-                              <div className='display_top_qnt'>
+                              <div className='display_top_qnt' key="{cart}">
                                 <span className='text-light itemtopqnt' onClick={() => derement(cart.id)} style={{ cursor: 'pointer' }}>-</span>
                                 <span className='text-light h1 p-4 text-center'>{cart.qnt}</span>
                                 <span className='text-light itemtopqnt' onClick={() => increment(cart.id)} style={{ cursor: 'pointer' }}>+</span>

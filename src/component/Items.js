@@ -3,7 +3,6 @@ import { Container, Card, Button, ButtonGroup, Modal, Navbar, Nav } from 'react-
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import axios from "axios";
 import Header from './Header';
 import Fooder from './Fooder';
 
@@ -17,13 +16,31 @@ function Items({ match }) {
   const [addcart_localstorage, setAddcart_localstorage] = useState([]);
 
 
+
+
+
+
   useEffect(() => {
     const slug = { slug: match.params.slug };
-    axios.post('http://127.0.0.1:8000/api/caproduct', slug)
-      .then((response) => {
-        setItemlist(response.data)
+
+    fetch("http://127.0.0.1:8000/api/caproduct", {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify(slug)
+    })
+      .then(function (res) {
+        res.json()
+          .then((result) => {
+            setItemlist(result)
+          })
       })
+      .catch(function (res) { console.log(res) })
+
   }, []);
+
 
 
   useEffect(() => {
@@ -49,7 +66,7 @@ function Items({ match }) {
     var item = JSON.parse(localStorage.getItem("item") || "[]");
 
     if (item.length === 0) {
-      var item = JSON.parse(localStorage.getItem("item") || "[]");
+
       item.push({ id: id, item_name: item_name, api_photo: api_photo, qnt: a, price: price });
       localStorage.setItem("item", JSON.stringify(item));
     } else {
@@ -57,11 +74,10 @@ function Items({ match }) {
         return dt.item_name.match(item_name)
       })
       if (mach.length === 0) {
-        var item = JSON.parse(localStorage.getItem("item") || "[]");
+
         item.push({ id: id, item_name: item_name, api_photo: api_photo, qnt: a, price: price });
         localStorage.setItem("item", JSON.stringify(item));
       } else {
-        var item = JSON.parse(localStorage.getItem("item") || "[]");
         var index = item.findIndex(x => x.item_name === item_name);
         item[index].qnt = item[index].qnt + 1;
         localStorage.setItem("item", JSON.stringify(item));
@@ -73,7 +89,7 @@ function Items({ match }) {
   const increment = (e) => {
     var item = JSON.parse(localStorage.getItem("item") || "[]");
     var index = item.findIndex(x => x.id === e);
-    if (item[index].qnt != 10) {
+    if (item[index].qnt !== 10) {
       item[index].qnt = item[index].qnt + 1;
       localStorage.setItem("item", JSON.stringify(item));
     }
@@ -86,9 +102,7 @@ function Items({ match }) {
     if (item[index].qnt > 1) {
       item[index].qnt = item[index].qnt - 1;
       localStorage.setItem("item", JSON.stringify(item));
-    } else {
-      const item = JSON.parse(localStorage.getItem("item"));
-      var index = item.findIndex(x => x.id === e);
+    } else {            
       item.splice(index, 1);
       localStorage.setItem('item', JSON.stringify(item));
     }
@@ -98,6 +112,7 @@ function Items({ match }) {
   return (
     <>
       <Header />
+
 
       <center>
         <Navbar collapseOnSelect>
@@ -116,7 +131,7 @@ function Items({ match }) {
       </center>
 
 
-      <div className='container h5 p-3 text-center'>{itemlist.length == 0 ? 'Wait Please No Product' :
+      <div className='container h5 p-3 text-center'>{itemlist.length === 0 ? 'Wait Please No Product' :
         <div className='container h4 p-3 text-center' style={{ color: '#d19c97' }}>-Product View-</div>
       }</div>
 
@@ -168,7 +183,7 @@ function Items({ match }) {
                     {addcart_localstorage.map((cart) => {
                       return (
                         <>
-                          {cart.id == data.id ?
+                          {cart.id === data.id ?
                             <div className='display_top_qnt'>
                               <span className='text-light itemtopqnt' onClick={() => derement(cart.id)} style={{ cursor: 'pointer' }}>-</span>
                               <span className='text-light h1 p-4 text-center'>{cart.qnt}</span>

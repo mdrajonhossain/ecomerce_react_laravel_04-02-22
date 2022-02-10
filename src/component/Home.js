@@ -14,12 +14,11 @@ import { Link } from "react-router-dom";
 
 
 
-
-
 function Home() {
   const [catagoryname, setCatagoryname] = useState([]);
   const [brandname, setBrandname] = useState([]);
   const [catsitebar, setCatsitebar] = useState(true);
+
 
 
 
@@ -40,6 +39,9 @@ function Home() {
 
 
 
+
+
+
   return (
     <>
       <Header />
@@ -52,7 +54,7 @@ function Home() {
                 {catagoryname.map((data) => {
                   return (
                     <>
-                      <Link to={`/items/${data.slug}`}>
+                      <Link to={`/items/${data.slug}`} key="{data.id}">
                         <div className='list'>
                           <span>
                             <img style={{ width: '20px', height: '20px' }} src={data.api_photo} alt="cata" />
@@ -104,7 +106,7 @@ function Home() {
             return (
               <>
 
-                <div className='col-md-3' style={{ cursor: 'pointer' }}>
+                <div className='col-md-3' style={{ cursor: 'pointer' }} key="{data}">
                   <Link to={`/items/${data.slug}`} style={{ textDecoration: 'none', color: 'black' }}>
                     <Card>
                       <Card.Body>
@@ -155,15 +157,15 @@ function Home() {
       <br />
 
 
-      <div className='container h4 p-3 text-center' style={{ color: '#d19c97' }}>-Brand View--</div>
+      <div className='container h4 p-3 text-center' style={{ color: '#d19c97' }}>-See Brand--</div>
       <div className='container'>
         <div className='row'>
           {brandname.map((brand) => {
             return (
               <>
-                <div className='col-md-3' style={{ cursor: 'pointer' }}>
+                <div className='col-md-3' style={{ cursor: 'pointer' }} key="{brand}">
                   <Card>
-                    <Card.Body>                      
+                    <Card.Body>
                     </Card.Body>
                     <Card.Img variant="center" width="100%" height="220" src={brand.api_photo} />
                     <Card.Body>
