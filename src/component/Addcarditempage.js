@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Table, Button, ButtonGroup } from 'react-bootstrap';
 import Header from './Header';
 import Fooder from './Fooder';
+import Userinfo from './Userinfo';
 
 
 
@@ -35,7 +36,7 @@ const Addcarditempage = () => {
   const increment = (e) => {
     var item = JSON.parse(localStorage.getItem("item") || "[]");
     var index = item.findIndex(x => x.id === e);
-    if (item[index].qnt != 10) {
+    if (item[index].qnt !== 10) {
       item[index].qnt = item[index].qnt + 1;
       localStorage.setItem("item", JSON.stringify(item));
     }
@@ -46,7 +47,7 @@ const Addcarditempage = () => {
     var item = JSON.parse(localStorage.getItem("item") || "[]");
     var index = item.findIndex(x => x.id === e);
 
-    if (item[index].qnt != 1) {
+    if (item[index].qnt !== 1) {
       item[index].qnt = item[index].qnt - 1;
       localStorage.setItem("item", JSON.stringify(item));
     }
@@ -59,17 +60,16 @@ const Addcarditempage = () => {
 
       <div className='container'>
         <div className='row'>
-          <div className='col-md-4'>
-            <Button variant="success" size="lg">Buy Now </Button>
-
-
+          <div className='col-md-5'>
+            {localStorage.getItem("username") ? <Userinfo /> : ""}
           </div>
-          <div className='col-md-8'>
-            <div className='h5 text-success'>Total= ৳{addcardtotal} </div>
+          <div className='col-md-7'>
+            <Button className="text-light" size="lg" style={{background: "#d19c97"}}>Buy Now </Button><br /><br />
+            <div className='h5 text-danger'>Total ৳{addcardtotal} </div>
             <Table striped bordered hover>
               <thead>
                 <tr className='text-center'>
-                  <th>Images-</th>
+                  <th>Images</th>
                   <th>Item Name</th>
                   <th>Quntity</th>
                   <th>Price</th>

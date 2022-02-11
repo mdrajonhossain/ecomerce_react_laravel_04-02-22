@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faTwitter, faLinkedin, faInstagram, faYoutube, faShopify } from '@fortawesome/free-brands-svg-icons';
-import axios from "axios";
+
 
 
 
@@ -97,7 +97,7 @@ function Header() {
     var v = t.substring(index + 8, index - 8);
 
     var token = v + s;
-    
+
     fetch("http://127.0.0.1:8000/api/logout", {
       headers: {
         'Accept': 'application/json',
@@ -159,8 +159,8 @@ function Header() {
             </Nav>
 
             <Nav>
-              {logedin != 0 ?
-                <NavDropdown title={localStorage.getItem("username") ? localStorage.getItem("username") : "Sign in"} id="collasible-nav-dropdown" style={{ marginTop: '8px' }}>
+              {logedin !== 0 ?
+                <NavDropdown title={localStorage.getItem("username") ? localStorage.getItem("username").toUpperCase() : "Sign in"} id="collasible-nav-dropdown" style={{ marginTop: '8px' }}>
                   <NavDropdown.Item onClick={() => signout()}>Sign Out</NavDropdown.Item>
                 </NavDropdown>
                 :
@@ -186,7 +186,7 @@ function Header() {
 
       {/* registration */}
       <Modal size="lg" show={registration} onHide={() => setRegistration(false)} aria-labelledby="example-modal-sizes-title-lg">
-        <Modal.Header closeButton className='text-light bg-info'>
+        <Modal.Header closeButton className='text-light' style={{background: "#d19c97"}}>
           <Modal.Title id="example-modal-sizes-title-lg" className="">Rregistration</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -221,7 +221,7 @@ function Header() {
                 <Form.Control type="password" placeholder="Confirm Password" />
                 <br />
                 <ButtonGroup size="lg">
-                  <Button className="bg-info" style={{ width: '200px' }}>Sign Up</Button>
+                  <Button className="text-light" style={{background: "#d19c97", width: '200px'}}>Sign Up</Button>
 
                 </ButtonGroup>
               </Col>
@@ -237,7 +237,7 @@ function Header() {
 
       {/* Login */}
       <Modal size="lg" show={logintab} onHide={() => setLogintab(false)} aria-labelledby="example-modal-sizes-title-lg">
-        <Modal.Header closeButton className='text-light bg-info'>
+        <Modal.Header closeButton className='text-light' style={{background: "#d19c97"}}>
           <Modal.Title id="example-modal-sizes-title-lg">Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -253,11 +253,11 @@ function Header() {
 
               <Form.Label column sm="2">Password</Form.Label>
               <Col sm="10">
-                <span className='passwordshow' onClick={() => setLogpass(logpass == "text" ? "password" : "text")}>{logpass == "text" ? " show " : " hide "}</span>
+                <span className='passwordshow' onClick={() => setLogpass(logpass === "text" ? "password" : "text")}>{logpass === "text" ? " hide " : " show "}</span>
                 <Form.Control type={logpass} placeholder="Password" value={password} onChange={passchang} style={{ paddingLeft: "60px" }} />
                 <br />
                 <ButtonGroup size="lg">
-                  <Button className="bg-info" style={{ width: '200px' }} onClick={() => sinin()}>Sign In</Button>
+                  <Button className="text-light" style={{background: "#d19c97", width: '200px'}} onClick={() => sinin()}>Sign In</Button>
                 </ButtonGroup>
               </Col>
             </Form.Group>
