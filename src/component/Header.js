@@ -34,7 +34,7 @@ function Header() {
 
   useEffect(() => {
     setInterval(function () {
-      if (localStorage.getItem("username").length) {
+      if (localStorage.getItem("username")) {
         setLogedin(true);
       }
     }, 100);
@@ -55,7 +55,6 @@ function Header() {
 
 
   const authinticate = (token) => {
-    console.log(token)
     var index = token.length;
     var y = token.substring(0, 8);
     var x = token.substring(8, index);
@@ -87,12 +86,18 @@ function Header() {
             setLogintab(false);
           })
       })
-      .catch(function (res) { console.log(res) })
   }
 
 
   const signout = () => {
-    var token = "132|HZ2waqaKVorytikB3FbJBC02GyMcx7tG2eELGmtg";
+
+    var t = localStorage.getItem("auth_token");
+    var index = t.length;
+    var s = t.substring(index - 8, -1);
+    var v = t.substring(index + 8, index - 8);
+
+    var token = v + s;
+    
     fetch("http://127.0.0.1:8000/api/logout", {
       headers: {
         'Accept': 'application/json',
