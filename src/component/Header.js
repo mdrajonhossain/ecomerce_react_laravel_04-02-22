@@ -118,9 +118,6 @@ function Header() {
           })
       })
       .catch(function (res) { console.log(res) })
-
-
-
   }
 
 
@@ -159,7 +156,7 @@ function Header() {
             </Nav>
 
             <Nav>
-              {logedin !== 0 ?
+              {logedin != 0 ?
                 <NavDropdown title={localStorage.getItem("username") ? localStorage.getItem("username").toUpperCase() : "Sign in"} id="collasible-nav-dropdown" style={{ marginTop: '8px' }}>
                   <NavDropdown.Item onClick={() => signout()}>Sign Out</NavDropdown.Item>
                 </NavDropdown>
@@ -186,7 +183,7 @@ function Header() {
 
       {/* registration */}
       <Modal size="lg" show={registration} onHide={() => setRegistration(false)} aria-labelledby="example-modal-sizes-title-lg">
-        <Modal.Header closeButton className='text-light' style={{background: "#d19c97"}}>
+        <Modal.Header closeButton className='text-light' style={{ background: "#d19c97" }}>
           <Modal.Title id="example-modal-sizes-title-lg" className="">Rregistration</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -221,7 +218,7 @@ function Header() {
                 <Form.Control type="password" placeholder="Confirm Password" />
                 <br />
                 <ButtonGroup size="lg">
-                  <Button className="text-light" style={{background: "#d19c97", width: '200px'}}>Sign Up</Button>
+                  <Button className="text-light" style={{ background: "#d19c97", width: '200px' }}>Sign Up</Button>
 
                 </ButtonGroup>
               </Col>
@@ -237,7 +234,7 @@ function Header() {
 
       {/* Login */}
       <Modal size="lg" show={logintab} onHide={() => setLogintab(false)} aria-labelledby="example-modal-sizes-title-lg">
-        <Modal.Header closeButton className='text-light' style={{background: "#d19c97"}}>
+        <Modal.Header closeButton className='text-light' style={{ background: "#d19c97" }}>
           <Modal.Title id="example-modal-sizes-title-lg">Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -257,7 +254,7 @@ function Header() {
                 <Form.Control type={logpass} placeholder="Password" value={password} onChange={passchang} style={{ paddingLeft: "60px" }} />
                 <br />
                 <ButtonGroup size="lg">
-                  <Button className="text-light" style={{background: "#d19c97", width: '200px'}} onClick={() => sinin()}>Sign In</Button>
+                  <Button className="text-light" style={{ background: "#d19c97", width: '200px' }} onClick={() => sinin()}>Sign In</Button>
                 </ButtonGroup>
               </Col>
             </Form.Group>
