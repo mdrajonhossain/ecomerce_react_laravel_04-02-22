@@ -4,19 +4,21 @@ import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faTwitter, faLinkedin, faInstagram, faYoutube, faShopify } from '@fortawesome/free-brands-svg-icons';
+import axios from "axios";
 
 
 
 function Header() {
   const [addcardt_counter, setAddcardt_counter] = useState(0);
-  const [login, setLogin] = useState(false);
+  const [logintab, setLogintab] = useState(false);
+  const [logedin, setLogedin] = useState(false);
 
   const [registration, setRegistration] = useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [logpass, setLogpass] = useState("password");
 
-  const [logpass, setLogpass] = useState("text");
 
 
 
@@ -28,6 +30,21 @@ function Header() {
     }, 100);
   }, []);
 
+
+
+  useEffect(() => {
+    setInterval(function () {
+      if (localStorage.getItem("username").length) {
+        setLogedin(true);
+      }
+    }, 100);
+  }, []);
+
+
+
+
+
+
   function emailchange(event) {
     setEmail(event.target.value);
   }
@@ -37,15 +54,69 @@ function Header() {
   }
 
 
-
-  const sinin = () => {
-    setEmail("");
-    setPassword("");
-    setLogin(false)
+  const authinticate = (token) => {
+    console.log(token)
+    var index = token.length;
+    var y = token.substring(0, 8);
+    var x = token.substring(8, index);
+    const auth_token = x + y;
+    localStorage.setItem("auth_token", auth_token);
   }
 
 
 
+
+  const sinin = () => {
+
+    fetch("http://127.0.0.1:8000/api/login", {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify({ email: email, password: password })
+    })
+      .then(function (res) {
+        res.json()
+          .then((result) => {
+            authinticate(result.token);
+            localStorage.setItem("username", result.data.name);
+            localStorage.setItem("email", result.data.email);
+            setEmail("");
+            setPassword("");
+            setLogintab(false);
+          })
+      })
+      .catch(function (res) { console.log(res) })
+  }
+
+
+  const signout = () => {
+    var token = "132|HZ2waqaKVorytikB3FbJBC02GyMcx7tG2eELGmtg";
+    fetch("http://127.0.0.1:8000/api/logout", {
+      headers: {
+        'Accept': 'application/json',
+        'Content-type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      method: "POST",
+      body: JSON.stringify({})
+    })
+      .then(function (res) {
+        res.json()
+          .then((result) => {
+            console.log(result);
+            localStorage.removeItem("username");
+            localStorage.removeItem("email");
+            localStorage.removeItem("auth_token");
+            setLogedin(false);
+          })
+      })
+      .catch(function (res) { console.log(res) })
+
+
+
+  }
 
 
   return (
@@ -83,13 +154,18 @@ function Header() {
             </Nav>
 
             <Nav>
-              <NavDropdown title="Sign In" id="collasible-nav-dropdown" style={{ marginTop: '8px' }}>
-                <NavDropdown.Item onClick={() => setLogin(true)}>Sign In</NavDropdown.Item>
-                <NavDropdown.Item onClick={() => setRegistration(true)}>Sign Up</NavDropdown.Item>
-              </NavDropdown>
-
+              {logedin != 0 ?
+                <NavDropdown title={localStorage.getItem("username") ? localStorage.getItem("username") : "Sign in"} id="collasible-nav-dropdown" style={{ marginTop: '8px' }}>
+                  <NavDropdown.Item onClick={() => signout()}>Sign Out</NavDropdown.Item>
+                </NavDropdown>
+                :
+                <NavDropdown title="Sign In" id="collasible-nav-dropdown" style={{ marginTop: '8px' }}>
+                  <NavDropdown.Item onClick={() => setLogintab(true)}>Sign In</NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => setRegistration(true)}>Sign Up</NavDropdown.Item>
+                </NavDropdown>
+              }
               <Nav.Link style={{ fontSize: '25px' }}>
-                <Link to={addcardt_counter ? "/addcard_item" : "#"} style={{ textDecoration: 'none', color: "#d19c97", }}>
+                <Link to={"/addcard_item"} style={{ textDecoration: 'none', color: "#d19c97", }}>
                   <FontAwesomeIcon icon={faShopify} />
                   <span className="add_count">{addcardt_counter}</span>
                 </Link>
@@ -145,8 +221,6 @@ function Header() {
                 </ButtonGroup>
               </Col>
             </Form.Group>
-
-
           </Form>
         </Modal.Body>
       </Modal>
@@ -157,7 +231,7 @@ function Header() {
 
 
       {/* Login */}
-      <Modal size="lg" show={login} onHide={() => setLogin(false)} aria-labelledby="example-modal-sizes-title-lg">
+      <Modal size="lg" show={logintab} onHide={() => setLogintab(false)} aria-labelledby="example-modal-sizes-title-lg">
         <Modal.Header closeButton className='text-light bg-info'>
           <Modal.Title id="example-modal-sizes-title-lg">Login</Modal.Title>
         </Modal.Header>
