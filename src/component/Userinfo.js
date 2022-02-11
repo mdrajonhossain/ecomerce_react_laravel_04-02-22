@@ -3,13 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 
 
 
-
-
-
 function Userinfo() {
-
-
-
 
   return (
     <>      
