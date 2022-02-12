@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 
 
 
+
 function Home() {
   const [catagoryname, setCatagoryname] = useState([]);
   const [brandname, setBrandname] = useState([]);
@@ -37,9 +38,7 @@ function Home() {
       });
   }, []);
 
-
-
-
+ 
 
 
   return (
@@ -210,7 +209,9 @@ function Home() {
       <br />
       <div className='container h4 p-3 text-center' style={{ color: '#d19c97' }}>All Product View</div>
       <Allproduct />
+    
       <Fooder />
+
     </>
   );
 }

@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faTwitter, faLinkedin, faInstagram, faYoutube, faShopify } from '@fortawesome/free-brands-svg-icons';
 
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function Header() {
@@ -78,6 +79,7 @@ function Header() {
       .then(function (res) {
         res.json()
           .then((result) => {
+            toast("You are Sign In Successfully");
             authinticate(result.token);
             localStorage.setItem("username", result.data.name);
             localStorage.setItem("email", result.data.email);
@@ -111,6 +113,7 @@ function Header() {
         res.json()
           .then((result) => {
             console.log(result);
+            toast("You are Sign out Successfully");
             localStorage.removeItem("username");
             localStorage.removeItem("email");
             localStorage.removeItem("auth_token");
@@ -262,6 +265,17 @@ function Header() {
         </Modal.Body>
       </Modal>
 
+      <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
 
     </>
   );
